@@ -11,6 +11,10 @@ Númer raðar er birt fremst
  '''
 FIRST_LETTER = 'A'
 BOOKED_LETTER = 'X'
+LEFT_COLUMN = "{:>2}"
+MIDDLE_COLUMN = "{:>3}"
+RIGHT_COLUMN = "{:>3}"
+
 
 
 def initialize_seating(no_of_rows, no_of_seats):
@@ -33,29 +37,19 @@ def ask_for_rows_and_seats():
     return rows, seats
 
 def print_seating_arrangement(a_list_of_lists):
-    ''' Formats the lists within the list according to examples from instructions and prints them out '''
+    ''' Formats and counts each row of seats within the airplane. Prints results, returns nothing '''
     counter = 1
-    index_counter = 0
-    list_example = a_list_of_lists[0]
-    length_of_lists= len(list_example)
+    length_of_row = len(a_list_of_lists[0])
+    half_a_row = int((length_of_row / 2))
 
     for list in a_list_of_lists:
-        print("", counter, end ='   ')
-        for item in list:
-            if index_counter < (length_of_lists/2): # Formatting for the left row of seats
-                print(item, end= ' ')
-                index_counter += 1
-            elif index_counter == (length_of_lists/2): #Formatting for the middle space between rows of seats
-                print(" ", item, end=' ')
-                index_counter += 1
-            else: # Formatting for the right row of seats
-                print(item, end= ' ')
-                index_counter += 1
-        index_counter = 0
-
+        left_row_list = list[:half_a_row]
+        right_row_list = list[half_a_row:]
+        left_row_str = " ".join(left_row_list)
+        right_row_str = " ".join(right_row_list)
+        print(f"{counter:>2}   {left_row_str}   {right_row_str}")
         counter += 1
-        print()
-
+    
 def main():
     no_of_rows, no_of_seats = ask_for_rows_and_seats()
     list_of_lists = initialize_seating(no_of_rows,no_of_seats)
