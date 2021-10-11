@@ -11,10 +11,6 @@ Númer raðar er birt fremst
  '''
 FIRST_LETTER = 'A'
 BOOKED_LETTER = 'X'
-LEFT_COLUM = "{:>2s}"
-MIDDLE_COLUMN = "{:>3}"
-RIGHT_COLUMN = "{:>3}"
-
 
 
 def initialize_seating(no_of_rows, no_of_seats):
@@ -39,12 +35,24 @@ def ask_for_rows_and_seats():
 def print_seating_arrangement(a_list_of_lists):
     ''' Formats the lists within the list according to examples from instructions and prints them out '''
     counter = 1
+    index_counter = 0
     list_example = a_list_of_lists[0]
     length_of_lists= len(list_example)
+
     for list in a_list_of_lists:
-        print(counter, end= ' ')
+        print("", counter, end ='   ')
         for item in list:
-            print(item, end= ' ')
+            if index_counter < (length_of_lists/2): # Formatting for the left row of seats
+                print(item, end= ' ')
+                index_counter += 1
+            elif index_counter == (length_of_lists/2): #Formatting for the middle space between rows of seats
+                print(" ", item, end=' ')
+                index_counter += 1
+            else: # Formatting for the right row of seats
+                print(item, end= ' ')
+                index_counter += 1
+        index_counter = 0
+
         counter += 1
         print()
 
