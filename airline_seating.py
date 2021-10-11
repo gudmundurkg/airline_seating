@@ -37,7 +37,7 @@ def print_seating_arrangement(a_list_of_lists):
         right_row_list = list[half_a_row:]
         left_row_str = " ".join(left_row_list)
         right_row_str = " ".join(right_row_list)
-        print(f"{counter:>2}   {left_row_str}   {right_row_str}")
+        print(f"{counter:>2}   {left_row_str}   {right_row_str} ")
         counter += 1
 
 def offer_user_a_seat():
@@ -50,9 +50,26 @@ def offer_user_a_seat():
     return int(row_number), (seat_number)
 
 def check_if_legal_input(row, seat, list_of_lists):
+    ''' Checks if input by user matches legal input '''
+
+    line_count = len(list_of_lists)
+    if row > line_count: # Check if row input is legal
+        return None
+    for list in list_of_lists: # Check if seat input is legal
+        for item in list:
+            if seat in item:
+                return True
+
+def all_x_check(list_of_lists):
+    ''' Checks if all seats have been booked. Returns True if all seats are taken '''
+
     for list in list_of_lists:
-        if seat in list:
-            return True
+        for item in list:
+            if item != "X":
+                return False
+    return True
+            
+
 
 def main():
     user_check = "y"
@@ -61,15 +78,30 @@ def main():
     print_seating_arrangement(list_of_lists)
 
     while user_check == "y": 
-        chosen_row, chosen_seat = offer_user_a_seat()
-        chosen_seat = chosen_seat.upper()
         try:
-            seat_index = (list_of_lists[chosen_row-1].index(chosen_seat)) # Get index for chosen seat
-            list_of_lists[chosen_row-1][seat_index] = (BOOKED_LETTER)
-            print_seating_arrangement(list_of_lists)
-        except ValueError:
-            print("That seat is taken!")
-        user_check = input("More seats y/n? ") 
+            chosen_row, chosen_seat = offer_user_a_seat()
+            chosen_seat = chosen_seat.upper()
+        except:
+            print("Seat number is invalid!")
+            continue
+
+        legality_check = check_if_legal_input(chosen_row, chosen_seat, list_of_lists) # Check if input row and seat nr were legal inputs
+        if legality_check:
+            try:
+                seat_index = (list_of_lists[chosen_row-1].index(chosen_seat)) # Get index for chosen seat
+                list_of_lists[chosen_row-1][seat_index] = (BOOKED_LETTER) # Replace seat letter with X
+                print_seating_arrangement(list_of_lists)
+            except ValueError:
+                print("That seat is taken!")
+                continue
+        else:
+            print("Seat number is invalid!")
+            continue
+
+        if all_x_check(list_of_lists) == True: # Ends the program if all seats have been booked
+            break
+        else:
+            user_check = input("More seats (y/n)? ") 
     
 # Main program starts here
 if __name__ == "__main__":
