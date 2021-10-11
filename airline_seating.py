@@ -2,9 +2,18 @@
 Höfundur: Guðmundur Kristján Guðnason
 '''
 
+'''
+Fjöldi raða og fjöldi sæta er stimplað inn af notanda
+Þá eru raðir og sæti birt (Sjá mynd 2)
+
+T.D. Raðir eru 7 og sæti eru 4 í hverri röð
+Númer raðar er birt fremst
+ '''
 FIRST_LETTER = 'A'
 BOOKED_LETTER = 'X'
-
+LEFT_COLUM = "{:>2s}"
+MIDDLE_COLUMN = "{:>3}"
+RIGHT_COLUMN = "{:>3}"
 
 
 
@@ -22,15 +31,28 @@ def initialize_seating(no_of_rows, no_of_seats):
     return seating
 
 def ask_for_rows_and_seats():
+    ''' Asks user for the amount of rows and seats on the airplane'''
     rows = int(input("Enter number of rows: "))
     seats = int(input("Enter number of seats in each row: "))
     return rows, seats
 
+def print_seating_arrangement(a_list_of_lists):
+    ''' Formats the lists within the list according to examples from instructions and prints them out '''
+    counter = 1
+    list_example = a_list_of_lists[0]
+    length_of_lists= len(list_example)
+    for list in a_list_of_lists:
+        print(counter, end= ' ')
+        for item in list:
+            print(item, end= ' ')
+        counter += 1
+        print()
+
 def main():
     no_of_rows, no_of_seats = ask_for_rows_and_seats()
     list_of_lists = initialize_seating(no_of_rows,no_of_seats)
-
-    print(list_of_lists)
+    print_seating_arrangement(list_of_lists)
+    
     
 # Main program starts here
 if __name__ == "__main__":
